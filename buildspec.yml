@@ -42,8 +42,4 @@ phases:
         "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest" > imagedefinitions.json
 
 artifacts:
-  files:
-    - imagedefinitions.json
-  base-directory: .
-  name: build-artifact-name
-  discard-paths: no
+  files: imagedefinitions.json
