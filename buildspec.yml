@@ -5,6 +5,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 626635440285.dkr.ecr.us-east-2.amazonaws.com
+    
     commands:
       # Build Order Dockerfile
       - echo Building API container from ./order/Dockerfile...
@@ -15,6 +16,8 @@ phases:
       - echo Building Worker container from ./search/Dockerfile...
       - docker buildx build --platform linux/amd64 -t hw2/project2-search ./search
       - docker tag hw2/project2-search:latest 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
+
+      - docker images
   post_build:
     commands:
       # Push Order Image to ECR
