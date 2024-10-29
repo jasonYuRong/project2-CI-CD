@@ -40,6 +40,7 @@ phases:
       - printf '[{"name":"product_lookup","imageUri":"%s"},{"name":"order_processing","imageUri":"%s"}]' \
         "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest" \
         "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest" > imagedefinitions.json
+      - cat imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json
