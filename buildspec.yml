@@ -21,11 +21,11 @@ phases:
   post_build:
     commands:
       # Push Order Image to ECR
-      - echo Pushing API container to ECR...
+      - echo Pushing order container to ECR...
       - docker push 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest
 
       # Push Worker Image to ECR
-      - echo Pushing Worker container to ECR...
+      - echo Pushing search container to ECR...
       - docker push 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
 
       # Update ECS API Service
