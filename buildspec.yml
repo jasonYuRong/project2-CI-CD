@@ -17,7 +17,7 @@ phases:
       - docker buildx build --platform linux/amd64 -t hw2/project2-search ./search
       - docker tag hw2/project2-search:latest 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
 
-      - docker images
+      - echo hello
   post_build:
     commands:
       # Push Order Image to ECR
