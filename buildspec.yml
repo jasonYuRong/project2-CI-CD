@@ -1,0 +1,34 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 626635440285.dkr.ecr.us-east-2.amazonaws.com
+    commands:
+      # Build Order Dockerfile
+      - echo Building API container from ./order/Dockerfile...
+      - docker buildx build --platform linux/amd64 -t hw2/project2-order ./order
+      - docker tag hw2/project2-order:latest 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest
+
+      # Build Search Dockerfile
+      - echo Building Worker container from ./search/Dockerfile...
+      - docker buildx build --platform linux/amd64 -t hw2/project2-search ./search
+      - docker tag hw2/project2-search:latest 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
+  post_build:
+    commands:
+      # Push Order Image to ECR
+      - echo Pushing API container to ECR...
+      - docker push 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest
+
+      # Push Worker Image to ECR
+      - echo Pushing Worker container to ECR...
+      - docker push 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
+
+      # Update ECS API Service
+      - echo Updating ECS API service...
+      - aws ecs update-service --cluster hw2 --service order_processing --force-new-deployment
+
+      # Update ECS Worker Service
+      - echo Updating ECS Worker service...
+      - aws ecs update-service --cluster hw2 --service product_lookup --force-new-deployment
