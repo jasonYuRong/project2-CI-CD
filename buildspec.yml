@@ -36,11 +36,7 @@ phases:
       # Update ECS Worker Service
       - echo Updating ECS Worker service...
       - aws ecs update-service --cluster hw2 --service product_lookup --force-new-deployment
-
-      - printf '[{"name":"product_lookup","imageUri":"%s"},{"name":"order_processing","imageUri":"%s"}]' \
-        "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest" \
-        "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest" > imagedefinitions.json
-      - sed -i 's/"imageUri": " */"imageUri": "/g' imagedefinitions.json
+      - echo '[{"name":"product_lookup","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest"},{"name":"order_processing","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest"}]' > imagedefinitions.json
       - cat imagedefinitions.json
 
 artifacts:
