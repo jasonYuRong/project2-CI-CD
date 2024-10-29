@@ -37,9 +37,13 @@ phases:
       - echo Updating ECS Worker service...
       - aws ecs update-service --cluster hw2 --service product_lookup --force-new-deployment
 
+      - printf '[{"name":"product_lookup","imageUri":"%s"},{"name":"order_processing","imageUri":"%s"}]' \
+        "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/hw2/project2-search:$IMAGE_TAG" \
+        "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/hw2/project2-order:$IMAGE_TAG" > imagedefinitions.json
+
 artifacts:
   files:
-    - '**/*'
+    - imagedefinitions.json
   base-directory: .
   name: build-artifact-name
   discard-paths: no
