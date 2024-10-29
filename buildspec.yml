@@ -36,3 +36,10 @@ phases:
       # Update ECS Worker Service
       - echo Updating ECS Worker service...
       - aws ecs update-service --cluster hw2 --service product_lookup --force-new-deployment
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: base_dir
+  name: build-artifact-name
+  discard-paths: no
