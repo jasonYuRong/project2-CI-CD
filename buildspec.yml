@@ -29,8 +29,11 @@ phases:
       - echo Pushing search container to ECR...
       - docker push 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
     
-      - echo '[{"name":"product_lookup","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest"},{"name":"order_processing","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest"}]' > imagedefinitions.json
-      - cat imagedefinitions.json
+      - echo '[{"name":"product_lookup","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest"}]' > search_imagedefinitions.json
+      - echo '[{"name":"order_processing","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest"}]' > order_imagedefinitions.json
+
 
 artifacts:
-  files: imagedefinitions.json
+  files: 
+    - order_imagedefinitions.json
+    - search_imagedefinitions.json
