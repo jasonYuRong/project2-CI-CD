@@ -28,14 +28,7 @@ phases:
       # Push Worker Image to ECR
       - echo Pushing search container to ECR...
       - docker push 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
-
-      # Update ECS API Service
-      - echo Updating ECS API service...
-      - aws ecs update-service --cluster hw2 --service order_processing --force-new-deployment
-
-      # Update ECS Worker Service
-      - echo Updating ECS Worker service...
-      - aws ecs update-service --cluster hw2 --service product_lookup --force-new-deployment
+    
       - echo '[{"name":"product_lookup","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest"},{"name":"order_processing","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest"}]' > imagedefinitions.json
       - cat imagedefinitions.json
 
