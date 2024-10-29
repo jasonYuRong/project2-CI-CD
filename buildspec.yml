@@ -38,8 +38,8 @@ phases:
       - aws ecs update-service --cluster hw2 --service product_lookup --force-new-deployment
 
       - printf '[{"name":"product_lookup","imageUri":"%s"},{"name":"order_processing","imageUri":"%s"}]' \
-        "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest" \
-        "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest" > imagedefinitions.json
+        "$(echo -n "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest" | xargs)" \
+        "$(echo -n "626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest" | xargs)" > imagedefinitions.json
       - cat imagedefinitions.json
 
 artifacts:
