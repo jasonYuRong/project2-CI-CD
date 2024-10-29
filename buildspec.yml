@@ -6,6 +6,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 626635440285.dkr.ecr.us-east-2.amazonaws.com
     
+  build:  
     commands:
       # Build Order Dockerfile
       - echo Building API container from ./order/Dockerfile...
