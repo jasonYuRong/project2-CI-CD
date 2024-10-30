@@ -20,7 +20,7 @@ phases:
 
       # Build Web Dockerfile
       - echo Building Worker container from ./web/Dockerfile...
-      - docker buildx build --platform linux/amd64 -t hw2/project2-search ./web
+      - docker buildx build --platform linux/amd64 -t hw2/project2-web ./web
       - docker tag hw2/project2-web:latest 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-web:latest
       
   post_build:
