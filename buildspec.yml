@@ -18,7 +18,11 @@ phases:
       - docker buildx build --platform linux/amd64 -t hw2/project2-search ./search
       - docker tag hw2/project2-search:latest 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
 
-      - echo hello
+      # Build Web Dockerfile
+      - echo Building Worker container from ./web/Dockerfile...
+      - docker buildx build --platform linux/amd64 -t hw2/project2-search ./web
+      - docker tag hw2/project2-web:latest 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-web:latest
+      
   post_build:
     commands:
       # Push Order Image to ECR
@@ -28,12 +32,18 @@ phases:
       # Push Worker Image to ECR
       - echo Pushing search container to ECR...
       - docker push 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest
+
+      # Push Worker Image to ECR
+      - echo Pushing web container to ECR...
+      - docker push 626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-web:latest
     
       - echo '[{"name":"product_lookup","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-search:latest"}]' > search_imagedefinitions.json
       - echo '[{"name":"order_processing","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-order:latest"}]' > order_imagedefinitions.json
+      - echo '[{"name":"web_server","imageUri":"626635440285.dkr.ecr.us-east-2.amazonaws.com/hw2/project2-web:latest"}]' > web_imagedefinitions.json
 
 
 artifacts:
   files: 
     - order_imagedefinitions.json
     - search_imagedefinitions.json
+    - web_imagedefinitions.json
