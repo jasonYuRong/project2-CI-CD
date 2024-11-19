@@ -35,7 +35,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ## 📖 Step-by-Step Configuration Guide
 
-### 1. Set Up Amazon DynamoDB
+### ⚡️ 1. Set Up Amazon DynamoDB
 1. Sign in to the **AWS Management Console**.
 2. Navigate to **DynamoDB** and create a new table:
    - **Table Name:** `Products`
@@ -45,7 +45,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ---
 
-### 2. Set Up Amazon SNS (Simple Notification Service)
+### ⚡️ 2. Set Up Amazon SNS (Simple Notification Service)
 1. Go to **SNS** in the AWS Console.
 2. Click **Create Topic**.
    - **Topic Type:** Standard
@@ -55,7 +55,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ---
 
-### 3. Set Up Amazon SQS (Simple Queue Service)
+### ⚡️ 3. Set Up Amazon SQS (Simple Queue Service)
 1. Navigate to **SQS**.
 2. Click **Create Queue** twice to create two queues:
    - **Queue 1: OrderQueue**
@@ -71,7 +71,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ---
 
-### 4. Set Up Amazon ECR (Elastic Container Registry)
+### ⚡️ 4. Set Up Amazon ECR (Elastic Container Registry)
 1. Navigate to **ECR** and create repositories for each service:
    - `product-lookup`, `order-processing`, `web-server`
 2. Open your terminal and navigate to the project directory where your Dockerfile is located. Use the following command to build your Docker image (e.g. order processing):
@@ -89,7 +89,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ---
 
-### 5. Create an ECS Task Definition Using the ECR Image
+### ⚡️ 5. Create an ECS Task Definition Using the ECR Image
 
 1.	Go to the ECS section in the AWS Management Console.
 2.	Click Task Definitions and then Create new Task Definition.
@@ -105,7 +105,8 @@ The purpose of this project is to design and implement an e-commerce platform us
 	    - Click Advanced container configuration.
 	    - Under Health check, specify:
 	    `Command: ["CMD-SHELL", "echo hello || exit 1"]`
-	    > Note: this command will always succeed by echoing “hello”. If modified, || exit 1 ensures that if any command fails, the container will be marked as unhealthy.
+        
+	        > Note: this command will always succeed by echoing “hello”. If modified, || exit 1 ensures that if any command fails, the container will be marked as unhealthy.
 
 	    - Interval: 30 (seconds between health checks)
 	    - Timeout: 5 (seconds to wait for a health check to succeed)
@@ -117,7 +118,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ---
 
-### 5. Create an ECS Cluster
+### ⚡️ 5. Create an ECS Cluster
 1. Go to **ECS** in the AWS Console.
 2. Click **Create Cluster**.
 3. Choose one of the following options based on your requirements:
@@ -130,7 +131,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ---
 
-### 6. Set Up IAM Roles for ECS Services
+### ⚡️ 6. Set Up IAM Roles for ECS Services
 1. Go to the **IAM** section in the AWS Console.
 2. **Create a New Role**:
    - **Select**: AWS Service → ECS
@@ -147,7 +148,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ---
 
-### 7. Set Up ECS Services
+### ⚡️ 7. Set Up ECS Services
 For each service (`service-web`, `service-search`, `service-order`):
 
 1. **Create a Task Definition**:
@@ -166,13 +167,13 @@ For each service (`service-web`, `service-search`, `service-order`):
 
 ---
 
-### 8. Configure Service Mesh (ECS Service Connect)
+### ⚡️ 8. Configure Service Mesh (ECS Service Connect)
 1. Enable **Service Connect** in each ECS service.
 2. Define service discovery settings and configure communication between services using mesh.
 
 ---
 
-### 9. Set Up CI/CD with AWS CodePipeline
+### ⚡️ 9. Set Up CI/CD with AWS CodePipeline
 1. Navigate to **CodePipeline** and create a new pipeline.
 2. **Source Stage**:
    - Select **GitHub** and connect to your repository.
