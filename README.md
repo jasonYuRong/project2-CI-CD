@@ -73,19 +73,19 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ### ⚡️ 4. Set Up Amazon ECR (Elastic Container Registry)
 1. Navigate to **ECR** and create repositories for each service:
-   - `product-lookup`, `order-processing`, `web-server`
+    - `product-lookup`, `order-processing`, `web-server`
 2. Open your terminal and navigate to the project directory where your Dockerfile is located. Use the following command to build your Docker image (e.g. order processing):
-`docker buildx build --platform linux/amd64 -t hw2/project2-order`
+    - `docker buildx build --platform linux/amd64 -t hw2/project2-order`
 3. Upload the Docker Image to Amazon ECR. Run the command to authenticate your Docker client with ECR.
- `aws ecr get-login-password --region <your-region> | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.your-region.amazonaws.com`
+    - `aws ecr get-login-password --region <your-region> | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.your-region.amazonaws.com`
 
 
 3.	Tag Your Docker Image. Replace placeholders with your image and repository details.
-`docker tag your-image-name:latest your-account-id.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest`
+    - `docker tag your-image-name:latest your-account-id.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest`
     
 
 4.	Push the Docker Image to ECR:
-`docker push your-account-id.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest`
+    - `docker push your-account-id.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest`
 
 ---
 
@@ -105,7 +105,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 	    - Click Advanced container configuration.
 	    - Under Health check, specify:
 	    `Command: ["CMD-SHELL", "echo hello || exit 1"]`
-        
+
 	        > Note: this command will always succeed by echoing “hello”. If modified, || exit 1 ensures that if any command fails, the container will be marked as unhealthy.
 
 	    - Interval: 30 (seconds between health checks)
@@ -113,7 +113,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 	    - Retries: 3 (number of retries before marking the container as unhealthy)
 	    - Start Period: 60 (seconds to wait before starting health checks)
 	3.	Set Task Memory and CPU:
-	•	Configure the required task-level memory and CPU resources.
+	    - Configure the required task-level memory and CPU resources.
 	4.	Review and Create: Click Create to save your Task Definition.
 
 ---
