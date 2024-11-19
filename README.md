@@ -74,17 +74,59 @@ The purpose of this project is to design and implement an e-commerce platform us
 ### 4. Set Up Amazon ECR (Elastic Container Registry)
 1. Navigate to **ECR** and create repositories for each service:
    - `product-lookup`, `order-processing`, `web-server`
-2. Follow the instructions to push Docker images:
-   - **Authenticate** Docker with ECR.
-   - **Build** and **tag** your Docker images.
-   - **Push** the images to the respective ECR repositories.
+2. Open your terminal and navigate to the project directory where your Dockerfile is located. Use the following command to build your Docker image (e.g. order processing):
+`docker buildx build --platform linux/amd64 -t hw2/project2-order`
+3. Upload the Docker Image to Amazon ECR. Run the command to authenticate your Docker client with ECR.
+ `aws ecr get-login-password --region <your-region> | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.your-region.amazonaws.com`
+
+
+3.	Tag Your Docker Image. Replace placeholders with your image and repository details.
+`docker tag your-image-name:latest your-account-id.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest`
+    
+
+4.	Push the Docker Image to ECR:
+`docker push your-account-id.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest`
 
 ---
 
-### 5. Create an ECS Fargate Cluster
+### 5. Create an ECS Task Definition Using the ECR Image
+
+1.	Go to the ECS section in the AWS Management Console.
+2.	Click Task Definitions and then Create new Task Definition.
+3.	Select Launch Type: Choose Fargate or EC2. 
+4.	Task Role: Choose an existing IAM role or create a new one.
+5. Add Container Definition with Health Check
+    1.	Add Container:
+	    - Container Name: Enter a name for your container (e.g., web-server).
+	    - Image: Enter the ECR image URL (e.g., your-account-id.dkr.ecr.your-region.amazonaws.com/your-repository-name:latest).
+	    - Memory Limits: Set the soft and hard memory limits as needed.
+	    - Port Mappings: Configure the container ports (e.g., 80:80 for a web server).
+	2.	Configure Health Check:
+	    - Click Advanced container configuration.
+	    - Under Health check, specify:
+	    `Command: ["CMD-SHELL", "echo hello || exit 1"]`
+	    > Note: this command will always succeed by echoing “hello”. If modified, || exit 1 ensures that if any command fails, the container will be marked as unhealthy.
+
+	    - Interval: 30 (seconds between health checks)
+	    - Timeout: 5 (seconds to wait for a health check to succeed)
+	    - Retries: 3 (number of retries before marking the container as unhealthy)
+	    - Start Period: 60 (seconds to wait before starting health checks)
+	3.	Set Task Memory and CPU:
+	•	Configure the required task-level memory and CPU resources.
+	4.	Review and Create: Click Create to save your Task Definition.
+
+---
+
+### 5. Create an ECS Cluster
 1. Go to **ECS** in the AWS Console.
-2. Click **Create Cluster** and choose **Networking only (for Fargate)**.
-3. Name your cluster `hw2-cluster` and create it.
+2. Click **Create Cluster**.
+3. Choose one of the following options based on your requirements:
+   - **Networking only (for Fargate)**: Use this option if you want to deploy services using AWS Fargate, which manages the underlying infrastructure for you.
+   - **EC2 Linux + Networking**: Use this option if you prefer to manage the EC2 instances yourself and have more control over the infrastructure.
+
+        > Note: Use EC2 for more control and customization, and use Fargate for ease of use and a serverless experience
+
+4. Name your cluster `hw2-cluster` and create it.
 
 ---
 
@@ -100,6 +142,8 @@ The purpose of this project is to design and implement an e-commerce platform us
    - Customize policies if needed to limit permissions based on your security requirements.
 4. **Name the Role**: (e.g., `ecs-task-role`) and create it.
 5. **Repeat** for any additional roles needed with different permissions.
+
+![Architecture Diagram](images/IAM.png)
 
 ---
 
