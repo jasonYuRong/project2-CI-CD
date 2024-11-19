@@ -13,11 +13,11 @@
 
 ## 🍀 Overview
 
-### 1. Introduction
+### ⚒️ 1. Introduction
 
 The purpose of this project is to design and implement an e-commerce platform using AWS cloud services. The application allows users to search for products and make purchases. In Part 2, the architecture leverages AWS services like ECS, ECR, CodePipeline, and DynamoDB to ensure scalability, reliability, and performance.
 
-### 2. Components
+### ⚒️ 2. Components
 - **Service 1 (Product Lookup):** Handles product search requests by querying DynamoDB for product data.
 - **Service 2 (Order Processing):** Processes customer orders by updating product inventory in DynamoDB.
 - **Service 3 (Web Server):** Manages user interactions with the platform (UI/UX) and serves product pages.
@@ -28,7 +28,7 @@ The purpose of this project is to design and implement an e-commerce platform us
   - **LookupQueue:** Consumed by the Product Lookup service.
 - **DynamoDB:** A NoSQL database where product details are stored and updated. Both the Product Lookup and Order Processing services interact with DynamoDB for retrieving and updating data. The primary key for DynamoDB is `productID`.
 
-### 3. Architecutre Diagram
+### ⚒️ 3. Architecutre Diagram
 ![Architecture Diagram](images/architecture-diagram.png)
 
 ---
