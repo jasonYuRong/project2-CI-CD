@@ -1,30 +1,27 @@
-# AWS Deployment Guide for E-commerce Platform
+# E-commerce Platform with CI/CD (AWS CodePipline)
 
-This guide will walk you through the steps required to set up and deploy your e-commerce services using the AWS Console.
+🙌 This guide will walk you through the steps required to set up and deploy your e-commerce platform with cloud-native architecture and microservices. 🙌
 
 ---
 
-## Prerequisites
+## 🧰 Prerequisites
 - AWS account
 - Docker installed locally
 - AWS CLI configured (optional)
 
 ---
 
-## Overview
+## 🍀 Overview
+
 ### 1. Introduction
 
 The purpose of this project is to design and implement an e-commerce platform using AWS cloud services. The application allows users to search for products and make purchases. In Part 2, the architecture leverages AWS services like ECS, ECR, CodePipeline, and DynamoDB to ensure scalability, reliability, and performance.
 
 ### 2. Components
-
-#### ECS Fargate
 - **Service 1 (Product Lookup):** Handles product search requests by querying DynamoDB for product data.
 - **Service 2 (Order Processing):** Processes customer orders by updating product inventory in DynamoDB.
 - **Service 3 (Web Server):** Manages user interactions with the platform (UI/UX) and serves product pages.
-- All services use **ECS Service Connect** to implement service mesh for communication.
-
-#### Application Integration
+> **Note:** All services use **ECS Service Connect** to implement service mesh for communication.
 - **SNS (Simple Notification Service):** The Web Server publishes events (e.g., product search or order placement) to SNS.
 - **SQS (Simple Queue Service):** Two queues are subscribed to SNS for processing messages:
   - **OrderQueue:** Consumed by the Order Processing service.
@@ -36,7 +33,7 @@ The purpose of this project is to design and implement an e-commerce platform us
 
 ---
 
-## Step-by-Step Configuration Guide
+## 📖 Step-by-Step Configuration Guide
 
 ### 1. Set Up Amazon DynamoDB
 1. Sign in to the **AWS Management Console**.
@@ -143,11 +140,7 @@ For each service (`service-web`, `service-search`, `service-order`):
 
 ---
 
-## Monitoring and Troubleshooting
+## 🔎 Monitoring and Troubleshooting (Optional)
 - Use **CloudWatch** for monitoring and log aggregation.
 - Verify service connections and communication in **ECS Service Connect**.
 - Troubleshoot any namespace issues in **CloudMap** if service discovery is not working correctly.
-
----
-
-Let me know if you need any additional information or modifications!
